@@ -1,0 +1,27 @@
+{
+  "name": "backend-api-serverless",
+  "version": "1.0.0",
+  "description": "REST API contruída utilizando a arquitetura serverless e aws cloud",
+  "scripts": {
+    "offline": "npm i; SLS_STAGE=dev sls offline start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcamendola/29aso-iot-projeto-final.git"
+  },
+  "keywords": [
+    "iot"
+  ],
+  "bugs": {
+    "url": "https://github.com/mcamendola/29aso-iot-projeto-final/issues"
+  },
+  "homepage": "https://github.com/mcamendola/29aso-iot-projeto-final#readme",
+  "devDependencies": {
+    "serverless-offline": "^3.18.0"
+  },
+  "dependencies": {
+    "firebase": "^4.10.0",
+    "lodash": "^4.17.5",
+    "moment-timezone": "^0.5.14"
+  }
+}
