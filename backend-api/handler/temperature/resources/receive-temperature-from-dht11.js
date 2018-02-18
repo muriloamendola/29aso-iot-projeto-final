@@ -32,8 +32,7 @@ const handler = (event, context, callback) => {
     .then(saveTodaysTemperaturesMarkings)
     .then(Response.created)
     .then(Resolve.success(callback))
-    .catch(Resolve.propagate(callback, Response.badRequest));
-  
+    .catch(Resolve.propagate(callback, Response.failure));  
 };
 
 module.exports = { handler };

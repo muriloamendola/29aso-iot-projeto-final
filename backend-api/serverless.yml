@@ -28,7 +28,14 @@ functions:
       - http:
           path: /temperature
           method: post
-          
+  
+  updateTemperatureMax:
+    handler: handler/temperature/resources/update-temperature-max.handler
+    events:
+      - http:
+          path: /temperature/max
+          method: put
+
 resources:
   Resources:
     defaultRole:
