@@ -1,6 +1,7 @@
 import sys
 import paho.mqtt.client as mqtt
 import RPi.GPIO as GPIO
+import Adafruit_DHT
 
 LED_PIN_NUMBER = 27
 
@@ -32,6 +33,12 @@ def on_message(client, userdata, msg):
     led_off()
   
 try:
+
+  while True:
+    humidity, temperature = Adafruit_DHT.read_retry(11, 4)
+    print('Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(temperature, humidity))
+
+  # MQTT Client to control LED status ON/OFF
   client = mqtt.Client()
   client.on_connect = on_connect
   client.on_message = on_message
