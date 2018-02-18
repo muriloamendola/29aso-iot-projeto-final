@@ -2,19 +2,15 @@ const _ = require('lodash/fp');
 const firebase = require('../../../lib/firebase');
 const Response = require('../../../lib/response');
 const Resolve = require('../../../lib/resolve');
-
-const temperatureKey = () => {
-  const today = new Date();
-  return `${today.getFullYear()}${today.getMonth()+1}${today.getDate()}`;
-};
+const KeyHelper = require('../helpers/firebase-temperature-key-helper');
 
 const getTemperatureMarkingsForToday = () => {
-  return firebase.database().ref(`/temperature/${temperatureKey()}`).once('value')
+  return firebase.database().ref(`/temperature/${KeyHelper.buildKey(new Date())}`).once('value')
     .then(snapshot => snapshot.val());
 };
 
 const saveTodaysTemperaturesMarkings = todaysTemperaturesMarkings => {
-  return firebase.database().ref(`/temperature/${temperatureKey()}`).set(todaysTemperaturesMarkings);
+  return firebase.database().ref(`/temperature/${KeyHelper.buildKey(new Date())}`).set(todaysTemperaturesMarkings);
 };
 
 const handler = (event, context, callback) => {

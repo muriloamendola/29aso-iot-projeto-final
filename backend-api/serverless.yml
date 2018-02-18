@@ -36,6 +36,14 @@ functions:
           path: /temperature/max
           method: put
 
+  getTemperaturesByDate:
+    handler: handler/temperature/resources/get-by-date.handler
+    events:
+      - http:
+          path: /temperatures/{date}
+          method: get
+          cors: true
+
 resources:
   Resources:
     defaultRole:
