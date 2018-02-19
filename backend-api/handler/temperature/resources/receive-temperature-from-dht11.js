@@ -3,7 +3,7 @@ const { Firebase, Options } = require('../../../initializer/firebase');
 const Response = require('../../../lib/response');
 const Resolve = require('../../../lib/resolve');
 const KeyHelper = require('../helpers/firebase-temperature-key-helper');
-//const MQTT = require('../../../lib/mqtt-api');
+const MQTT = require('../../../lib/mqtt-api');
 
 const getTemperatureMarkingsForToday = app => {
   return Firebase.database(app).ref(`/temperature/${KeyHelper.buildKey(new Date())}`).once('value')
@@ -36,7 +36,7 @@ const handler = (event, context, callback) => {
       if (_.isEmpty(todaysTemperaturesMarkings)) todaysTemperaturesMarkings = { temperatures: [] };
       todaysTemperaturesMarkings.temperatures.push(temperatureMarking);
       
-      //MQTT.publish(temperatureMarking.temperature >= temperatureMax ? 'ON' : 'OFF');
+      MQTT.publish(temperatureMarking.temperature >= temperatureMax ? 'ON' : 'OFF');
 
       return todaysTemperaturesMarkings;
     })
