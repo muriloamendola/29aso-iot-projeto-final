@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io/api/node
 
+backend-api/initializer/firebase_credentials.json
+
 # Local test
 handler/**/test
 *.orig
