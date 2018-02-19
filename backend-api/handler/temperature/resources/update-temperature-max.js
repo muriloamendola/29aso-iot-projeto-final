@@ -1,10 +1,10 @@
 const _ = require('lodash/fp');
-const firebase = require('../../../lib/firebase');
+const FirebaseApi = require('../../../lib/firebase-api');
 const Response = require('../../../lib/response');
 const Resolve = require('../../../lib/resolve');
 
 const saveTemperatureMax = temperature => {
-  return firebase.database().ref('/temperature/max').set(temperature);
+  return FirebaseApi.set('/temperature/max', temperature);
 };
 
 const handler = (event, context, callback) => {

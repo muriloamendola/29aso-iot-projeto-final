@@ -1,4 +1,4 @@
-service: 29aso-iot-backend-api
+service: backend-api-29aso-iot
 
 plugins:
   - serverless-offline

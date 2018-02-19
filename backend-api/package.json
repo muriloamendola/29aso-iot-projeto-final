@@ -20,7 +20,7 @@
     "serverless-offline": "^3.18.0"
   },
   "dependencies": {
-    "firebase": "^4.10.0",
+    "firebase-admin": "^5.9.0",
     "lodash": "^4.17.5",
     "moment-timezone": "^0.5.14",
     "mqtt": "^2.15.3"

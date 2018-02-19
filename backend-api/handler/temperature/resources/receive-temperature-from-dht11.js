@@ -1,22 +1,20 @@
 const _ = require('lodash/fp');
-const firebase = require('../../../lib/firebase');
+const FirebaseApi = require('../../../lib/firebase-api');
 const Response = require('../../../lib/response');
 const Resolve = require('../../../lib/resolve');
 const KeyHelper = require('../helpers/firebase-temperature-key-helper');
-const MQTT = require('../../../lib/mqtt-api');
+//const MQTT = require('../../../lib/mqtt-api');
 
 const getTemperatureMarkingsForToday = () => {
-  return firebase.database().ref(`/temperature/${KeyHelper.buildKey(new Date())}`).once('value')
-    .then(snapshot => snapshot.val());
+  return FirebaseApi.once(`/temperature/${KeyHelper.buildKey(new Date())}`);
 };
 
 const getTemperatureMax = () => {
-  return firebase.database().ref('temperature/max').once('value')
-    .then(snapshot => snapshot.val());
+  return FirebaseApi.once('temperature/max');
 };
 
 const saveTodaysTemperaturesMarkings = todaysTemperaturesMarkings => {
-  return firebase.database().ref(`/temperature/${KeyHelper.buildKey(new Date())}`).set(todaysTemperaturesMarkings);
+  return FirebaseApi.set(`/temperature/${KeyHelper.buildKey(new Date())}`, todaysTemperaturesMarkings);
 };
 
 const handler = (event, context, callback) => {
@@ -30,7 +28,7 @@ const handler = (event, context, callback) => {
       if (_.isEmpty(todaysTemperaturesMarkings)) todaysTemperaturesMarkings = { temperatures: [] };
       todaysTemperaturesMarkings.temperatures.push(temperatureMarking);
       
-      MQTT.publish(temperatureMarking.temperature >= temperatureMax ? 'ON' : 'OFF');
+      //MQTT.publish(temperatureMarking.temperature >= temperatureMax ? 'ON' : 'OFF');
 
       return todaysTemperaturesMarkings;
     })
