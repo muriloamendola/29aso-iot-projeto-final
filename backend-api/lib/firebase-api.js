@@ -1,26 +1,34 @@
 const { Firebase, Options } = require('../initializer/firebase');
 
 const initializeApp = () => {
-  if (!Firebase.apps.length) {
-    Firebase.initializeApp(Options);
-  }
+  return Firebase.initializeApp(Options);
 }
 
 const once = ref => {
-  initializeApp();
-  return Firebase.database().ref(ref).once('value')
-    .then(snapshot => snapshot.val())
+  let app = initializeApp();
+  return Firebase.database(app).ref(ref).once('value')
+    .then(snapshot => {
+      console.log(`once.(${ref})`, snapshot.val());
+      app.delete();
+      return snapshot.val()
+    })
     .catch((err) => {
-      Firebase.app().delete();
+      console.log(`once.(${ref})`, err);
+      app.delete();
       throw err;
     });
 }
 
 const set = (ref, value) => {
-  initializeApp();
-  return Firebase.database().ref(ref).set(value)
+  let app = initializeApp();
+  return Firebase.database(app).ref(ref).set(value)
+    .then(() => {
+      console.log(`set(${ref}) realizado com sucesso.`, value)
+      app.delete();
+    })
     .catch((err) => {
-      Firebase.app().delete();
+      console.log(`once.(${ref})`, err);
+      app.delete();
       throw err;
     });
 }

@@ -1,30 +1,38 @@
 const _ = require('lodash/fp');
-const FirebaseApi = require('../../../lib/firebase-api');
+const { Firebase, Options } = require('../../../initializer/firebase');
 const Response = require('../../../lib/response');
 const Resolve = require('../../../lib/resolve');
 const KeyHelper = require('../helpers/firebase-temperature-key-helper');
 //const MQTT = require('../../../lib/mqtt-api');
 
-const getTemperatureMarkingsForToday = () => {
-  return FirebaseApi.once(`/temperature/${KeyHelper.buildKey(new Date())}`);
+const getTemperatureMarkingsForToday = app => {
+  return Firebase.database(app).ref(`/temperature/${KeyHelper.buildKey(new Date())}`).once('value')
+    .then(snapshot => snapshot.val());
 };
 
-const getTemperatureMax = () => {
-  return FirebaseApi.once('temperature/max');
+const getTemperatureMax = app => {
+  return Firebase.database(app).ref('temperature/max').once('value')
+    .then(snapshot => snapshot.val());
 };
 
-const saveTodaysTemperaturesMarkings = todaysTemperaturesMarkings => {
-  return FirebaseApi.set(`/temperature/${KeyHelper.buildKey(new Date())}`, todaysTemperaturesMarkings);
+const saveTodaysTemperaturesMarkings = (app, todaysTemperaturesMarkings) => {
+  return Firebase.database(app).ref(`/temperature/${KeyHelper.buildKey(new Date())}`).set(todaysTemperaturesMarkings);
 };
 
 const handler = (event, context, callback) => {
   const temperatureMarking = JSON.parse(event.body);
+
+  let firebaseApp = Firebase.initializeApp(Options);
+
   return Promise.all([
       Promise.resolve(temperatureMarking),
-      getTemperatureMarkingsForToday(),
-      getTemperatureMax()
+      getTemperatureMarkingsForToday(firebaseApp),
+      getTemperatureMax(firebaseApp)
     ])
     .then(([temperatureMarking, todaysTemperaturesMarkings, temperatureMax]) => {
+      console.log('Nova marcação de temperatura', temperatureMarking);
+      console.log(`Máxima temperatura: ${temperatureMax}`);
+
       if (_.isEmpty(todaysTemperaturesMarkings)) todaysTemperaturesMarkings = { temperatures: [] };
       todaysTemperaturesMarkings.temperatures.push(temperatureMarking);
       
@@ -32,10 +40,16 @@ const handler = (event, context, callback) => {
 
       return todaysTemperaturesMarkings;
     })
-    .then(saveTodaysTemperaturesMarkings)
+    .then(markings => {
+      return saveTodaysTemperaturesMarkings(firebaseApp, markings)
+        .then(() => Firebase.app().delete())
+    })
     .then(Response.created)
     .then(Resolve.success(callback))
-    .catch(Resolve.propagate(callback, Response.failure));  
+    .catch(error => {
+      Firebase.app().delete();
+      Resolve.propagate(callback, Response.failure, error);
+    });  
 };
 
 module.exports = { handler };

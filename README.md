@@ -8,3 +8,8 @@
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 sudo python setup.py install
 ```
+
+## Backend API
+
+https://platform.serverless.com/services/mcamendola/backend-api-29aso-iot
+
