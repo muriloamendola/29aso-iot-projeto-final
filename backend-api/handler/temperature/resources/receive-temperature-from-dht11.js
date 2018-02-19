@@ -3,9 +3,15 @@ const firebase = require('../../../lib/firebase');
 const Response = require('../../../lib/response');
 const Resolve = require('../../../lib/resolve');
 const KeyHelper = require('../helpers/firebase-temperature-key-helper');
+const MQTT = require('../../../lib/mqtt-api');
 
 const getTemperatureMarkingsForToday = () => {
   return firebase.database().ref(`/temperature/${KeyHelper.buildKey(new Date())}`).once('value')
+    .then(snapshot => snapshot.val());
+};
+
+const getTemperatureMax = () => {
+  return firebase.database().ref('temperature/max').once('value')
     .then(snapshot => snapshot.val());
 };
 
@@ -17,11 +23,14 @@ const handler = (event, context, callback) => {
   const temperatureMarking = JSON.parse(event.body);
   return Promise.all([
       Promise.resolve(temperatureMarking),
-      getTemperatureMarkingsForToday()
+      getTemperatureMarkingsForToday(),
+      getTemperatureMax()
     ])
-    .then(([temperatureMarking, todaysTemperaturesMarkings]) => {
+    .then(([temperatureMarking, todaysTemperaturesMarkings, temperatureMax]) => {
       if (_.isEmpty(todaysTemperaturesMarkings)) todaysTemperaturesMarkings = { temperatures: [] };
       todaysTemperaturesMarkings.temperatures.push(temperatureMarking);
+      
+      MQTT.publish(temperatureMarking.temperature >= temperatureMax ? 'ON' : 'OFF');
 
       return todaysTemperaturesMarkings;
     })
