@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "REST API contruída utilizando a arquitetura serverless e aws cloud",
   "scripts": {
-    "offline": "npm i; SLS_STAGE=dev sls offline start"
+    "offline": "npm i; SLS_STAGE=dev sls offline start",
+    "deploy:dev": "npm i; AWS_PROFILE=personal sls deploy --stage dev"
   },
   "repository": {
     "type": "git",
