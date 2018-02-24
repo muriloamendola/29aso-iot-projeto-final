@@ -21,8 +21,18 @@ Nessa seção explicaremos em detalhes as tecnologias e equipamentos utilizados 
 
 ### Equipamentos utilizados
 
-* [Raspberry Pi 3B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-![Raspberry Pi 3B](./doc/images/raspberrypi_3.jpg =100x100)
+* 1 | [Raspberry Pi 3B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
+![Raspberry Pi 3B](./doc/images/raspberrypi_3.jpg)
+* 1 | [Sensor Dht11](https://medium.com/dyi-electronics/raspberry-pi-and-dht11-humidity-sensor-cccf6b3072ad)
+![Dht11](./doc/images/dht11.jpeg)
+* 1 | Breadboard Modular
+![Breadboard Modular](./doc/images/breadboard_modular.jpg)
+* 1 | Led
+![Led](./doc/images/led.jpg)
+* 2 | Resistor
+![Resistor](./doc/images/resistor.jpeg)
+* 4 | Jumpers
+![Jumpers](./doc/images/jumpers.jpeg)
 
 * paho-mqtt
 
