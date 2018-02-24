@@ -3,13 +3,13 @@
 
 ## Objetivo
 
-O objetivo é a contrução de um projeto prático simples que utilize todos os recursos abordados em sala de aula. 
+O objetivo é a construção de um projeto prático simples que utilize todos os recursos abordados em sala de aula. 
 
 Optamos por desenvolver um protótipo onde a temperatura e humidade ambiente serão medidas por um sensor e enviadas para uma base de dados em cloud através de uma chamada a uma API REST. 
 
 O serviço que recebe as medições de temperatura verificará se a mesma excedeu o limite configurado e enviará uma mensagem a um tópico do `broker mosquitto`. Caso a temperatura seja maior ou igual ao limite configurado a mensagem será `ON` e caso contrário `OFF`.
 
-Há um código para controle do led que através de um `subscribe` no tópico acima mecionado, recebe as mensagens que chegam ao tópico e acende o led quando recebe uma mensagem `ON` ou apaga quando recebe a mensagem `OFF`.
+Há um código para controle do led que através de um `subscribe` no tópico acima mencionado, recebe as mensagens que chegam ao tópico e acende o led quando recebe uma mensagem `ON` ou apaga quando recebe a mensagem `OFF`.
 
 A ideia é bem simples e foi pensado única e exclusivamente com o intuito de utilizar todas as tecnologias e protocolos vistos em aula.
 
@@ -156,6 +156,8 @@ O arquivo `temperature.py` faz uso da lib `Adafruit_Python_DHT` para resgatar a 
 ## Conclusão
 
 No vídeo abaixo é possível ver a solução completa em funcionamento.
+
+* https://youtu.be/bdBhQIeJmhw
 
 ## Colaboradores
 
