@@ -22,27 +22,145 @@ Nessa seção explicaremos em detalhes as tecnologias e equipamentos utilizados 
 ### Equipamentos utilizados
 
 * 1 | [Raspberry Pi 3B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
+
 ![Raspberry Pi 3B](./doc/images/raspberrypi_3.jpg)
+
 * 1 | [Sensor Dht11](https://medium.com/dyi-electronics/raspberry-pi-and-dht11-humidity-sensor-cccf6b3072ad)
+
 ![Dht11](./doc/images/dht11.jpeg)
+
 * 1 | Breadboard Modular
+
 ![Breadboard Modular](./doc/images/breadboard_modular.jpg)
+
 * 1 | Led
+
 ![Led](./doc/images/led.jpg)
+
 * 2 | Resistor
+
 ![Resistor](./doc/images/resistor.jpeg)
+
 * 4 | Jumpers
+
 ![Jumpers](./doc/images/jumpers.jpeg)
 
-* paho-mqtt
+### Arquitetura
 
-# Python library to read the DHT series of humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.
+![Arquitetura](./doc/images/arquitetura.png)
+
+Fazendo um paralelo entre o desenho da arquitetura acima apresentado e a estrutura organizacional desse repositório temos:
+
+* [backend-api/](#backend-api): diretório onde se encontra os códigos fonte dos serviços da API REST contruída na arquitetura serverless com a linguagem nodejs.
+* [iot/](#iot): diretório onde encontramos os programas responsáveis pelo controle do sensor de temperatura e também do led. Esses programas foram desenvolvidos em linguagem python.
+* [android/](#android): [IGOR]
+
+#### backend-api
+
+API REST com serviços utilizados para centralizar a comunicação entre os componentes da solução.
+
+Uma documentação mais detalhada dos serviços expostos por essa api pode ser encontrada acessando o link https://platform.serverless.com/services/mcamendola/backend-api-29aso-iot.
+
+##### Dependências
+
+* Node version 8.9
+* [Serverless Framework](https://serverless.com)
+
+Para instalar o serverless framework, utilize o comando abaixo:
+
+```bash
+npm install -g serverless
+```
+
+##### Rodando o projeto em ambiente local
+
+Clone esse repositório em sua máquina:
+
+```bash
+git clone git@github.com:mcamendola/29aso-iot-projeto-final.git
+```
+
+Entre no diretório [backend-api/](./backend-api) e execute o seguinte comando:
+
+```bash
+npm run offline
+```
+
+Um servidor local será configurado em sua máquina e os serviços estarão disponíveis a partir da url `http://localhost:3000`.
+
+Para conseguir simular em ambiente local o API Gateway e o Lambda da AWS, utilizamos um plugin do framework serverless conhecido como [serverless-offline plugin](https://github.com/dherault/serverless-offline).
+
+##### Deploy dos serviços na AWS
+
+Para realizar o deploy dos serviços em uma conta AWS, basta executar o seguinte comando:
+
+```bash
+npm run deploy:dev
+```
+
+Esse comando na verdade executará outra sequência de comandos, presente na linha 7 do arquivo [package.json](./backend-api/package.json).
+
+```bash
+npm i; AWS_PROFILE=personal sls deploy --stage dev
+```
+
+Repare na presença da variável `AWS_PROFILE=personal`. Ao definir essa variável, estamos dizendo para o serverless framework realizar o deploy dos serviços na conta AWS cujas credenciais de acesso estão configuradas no profile `personal` do arquivo de credenciais da AWS.
+
+```
+## ~/.aws/credentials
+
+[personal]
+aws_access_key_id=YOUR_DEV_ACCOUNT_KEY_ID
+aws_secret_access_key=YOUR_DEV_ACCOUNT_ACCESS_KEY
+```
+
+#### iot
+
+Dentro do diretório `iot` encontramos outro diretório chamado `raspberrypi`, organização proposta em virtude de estarmos utilizando a placa Raspberry Pi 3 para o desenvolvimento do protótipo.
+
+```
+|- raspberrypi/
+|--- led.py
+|--- requirements.txt
+|--- temperature.py
+```
+
+##### Dependências
+
+No arquivo [requirements.txt](./iot/raspberrypi/requirements.txt) encontramos algumas libs necessárias para execução dos programas [led.py](#led.py) e [temperature.py](#temperature.py).
+
+* [paho-mqtt](https://pypi.python.org/pypi/paho-mqtt/1.1): implementação do protocolo MQTT 3.1 e 3.1.1.
+* [requests](http://docs.python-requests.org/en/master/): biblioteca python para chamadas a APIs REST utilizando o protocolo HTTP.
+
+Além das dependências listadas no arquivo `requirements.txt`, precisamos utilizar uma biblioteca para integração com o sensor `Dht11`. Essa biblioteca se chama `Adafruit_Python_DHT` e os passos para instalação estão descritos no comando abaixo:
+
 ```bash
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 sudo python setup.py install
 ```
 
-## Backend API
+##### led.py
 
-https://platform.serverless.com/services/mcamendola/backend-api-29aso-iot
+No arquivo `led.py` encontramos a codificação necessária para realizarmos um `subscribe` no tópico do Mosquitto e dependendo da mensagem recebida acender ou apagar o led.
+
+`IMPORTANTE: ` utilizamos uma versão aberta do mosquitto disponível a partir do `host: iot.eclipse.org`. Esse broker é recomendado apenas para fins de estudo e testes, pois, não é seguro utilizá-lo em ambiente de produção.
+
+##### temperature.py
+
+O arquivo `temperature.py` faz uso da lib `Adafruit_Python_DHT` para resgatar a temperatura e a humidade capturada pelo sensor e, então, realiza um POST dessa informação para o serviço descrito acima na seção [backend-api](#backend-api).
+
+#### android
+
+[IGOR]
+
+## Conclusão
+
+No vídeo abaixo é possível ver a solução completa em funcionamento.
+
+## Colaboradores
+
+* Igor Gabriel da Silva (RM: 48325)
+* Murilo Cezar Amêndola de Oliveira (RM: 30356)
+* Lucas Henrique Ferreira (RM: 48727)
+
 
