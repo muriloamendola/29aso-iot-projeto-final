@@ -11,9 +11,8 @@ def send_data_to_service(temperature, humidity):
 	  'humidity': humidity,
 	  'markingAt': time.time()
   })
-  response = requests.post(service_url, data)
-  print(response.json())
-
+  requests.post(service_url, data)
+  
 try:
   while True:
     humidity, temperature = Adafruit_DHT.read_retry(11, 4)
