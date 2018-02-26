@@ -44,6 +44,13 @@ functions:
           method: get
           cors: true
 
+  getTemperatureMax:
+    handler: handler/temperature/resources/get-temperature-max.handler
+    events:
+      - http:
+          path: /temperature/max
+          method: get
+
 resources:
   Resources:
     defaultRole:
