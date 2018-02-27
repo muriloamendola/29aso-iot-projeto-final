@@ -6,7 +6,14 @@ const Resolve = require('../../../lib/resolve');
 const getTemperatureMax = () => {
   Firebase.initializeApp(Options);
   return Firebase.database().ref('temperature/max').once('value')
-    .then(snapshot => snapshot.val());
+    .then(snapshot => {
+      Firebase.app().delete();
+      return snapshot.val();
+    })
+    .catch((err) => {
+      Firebase.app().delete();
+      throw err;
+    });;
 };
 
 const handler = (event, context, callback) => {
