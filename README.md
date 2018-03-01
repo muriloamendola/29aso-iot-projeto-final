@@ -53,7 +53,7 @@ Fazendo um paralelo entre o desenho da arquitetura acima apresentado e a estrutu
 
 * [backend-api/](#backend-api): diretório onde se encontra os códigos fonte dos serviços da API REST contruída na arquitetura serverless com a linguagem nodejs.
 * [iot/](#iot): diretório onde encontramos os programas responsáveis pelo controle do sensor de temperatura e também do led. Esses programas foram desenvolvidos em linguagem python.
-* [android/](#android): [IGOR]
+* [superapp/](#superapp): diretório onde se encontram os códigos fonte do aplicativo desenvolvido para a plataforma Android.
 
 #### backend-api
 
@@ -149,9 +149,44 @@ No arquivo `led.py` encontramos a codificação necessária para realizarmos um 
 
 O arquivo `temperature.py` faz uso da lib `Adafruit_Python_DHT` para resgatar a temperatura e a humidade capturada pelo sensor e, então, realiza um POST dessa informação para o serviço descrito acima na seção [backend-api](#backend-api).
 
-#### android
+#### superapp
 
-[IGOR]
+O aplicativo foi desenvolvido utilizando os principais frameworks e bibliotecas para aplicativos Android.
+
+```
+|- app/
+|--- src/
+|------ main/
+|--------- br/com/fiap/iot/superapp/
+|------------ adapter/
+|------------ api/
+|------------ event/
+|------------ model/
+|------------ ui/
+```
+
+* 1 | Caso de uso - Atualização de alerta de temperatura
+![Screen1](./doc/images/screen_temperature.png)
+
+* 2 | Caso de uso - Lista com as últimas temperaturas
+![Screen2](./doc/images/screen_temperature_list.png)
+
+
+##### Retrofit
+
+[Retrofit](http://square.github.io/retrofit/) é uma das mais poderosas e populares bibliotecas de HTTP Client para Android e Java, produzida pela Square Inc. e lançada como open source para toda comunidade.
+
+Um dos princípios do Retrofit é a simplicidade, que permite que não nos preocupemos com toda a complexidade de criar uma conexão Web Service, uma vez que grande parte de sua correspondente lógica é abstraída. Com toda essa proposta, devemos apenas implementar algumas interfaces, anotar alguns métodos e voilà!
+
+##### Butter Knife
+
+[ButterKnife](http://jakewharton.github.io/butterknife/) é uma biblioteca que simplifica o acesso as `Views` de nossos layouts XML, em nossos app Android, por meio de annotations. 
+
+Desenvolvida pelo já conhecido Jake Wharton a lib ButterKnife, além de simplificar o acesso as `Views`, nos permite vincular listeners as `Views` sem a necessidade de classes anônimas e implementação de interfaces.
+
+##### EventBus
+
+Construindo um aplicativo Android que tem várias componentes ativos que comunicam uns com os outros pode se tornar tedioso. Para economizar tempo, os desenvolvedores muitas vezes acabam com componentes fortemente acoplados em seus aplicativos. [EventBus](http://greenrobot.org/eventbus/) é uma biblioteca open-source popular que foi criado para resolver esse problema usando o padrão publisher/subscriber.
 
 ## Conclusão
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="br.com.fiap.iot.superapp.ui.MainActivity">
+
+    <TextView
+        android:id="@+id/label_max_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/max_temperature" />
+
+    <EditText
+        android:id="@+id/value_max_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:text="0"
+        android:textSize="100dp" />
+
+    <Button
+        android:id="@+id/update_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/update_temperature" />
+
+    <Button
+        android:id="@+id/search_temperature_by_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/search_temperature" />
+</LinearLayout>
