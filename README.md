@@ -153,6 +153,21 @@ O arquivo `temperature.py` faz uso da lib `Adafruit_Python_DHT` para resgatar a 
 
 O aplicativo foi desenvolvido utilizando os principais frameworks e bibliotecas para aplicativos Android.
 
+```
+|- app/
+|--- src/
+|------ main/
+|--------- br/com/fiap/iot/superapp/
+|------------ adapter/
+|------------ api/
+|------------ event/
+|------------ model/
+|------------ ui/
+```
+
+[Caso de uso - Atualização de alerta de temperatura](./doc/images/screen_temperature.png) 
+[Caso de uso - Lista com as últimas temperaturas](./doc/images/screen_temperature.png)
+
 ##### Retrofit
 
 [Retrofit](http://square.github.io/retrofit/) é uma das mais poderosas e populares bibliotecas de HTTP Client para Android e Java, produzida pela Square Inc. e lançada como open source para toda comunidade.
@@ -168,10 +183,6 @@ Desenvolvida pelo já conhecido Jake Wharton a lib ButterKnife, além de simplif
 ##### EventBus
 
 Construindo um aplicativo Android que tem várias componentes ativos que comunicam uns com os outros pode se tornar tedioso. Para economizar tempo, os desenvolvedores muitas vezes acabam com componentes fortemente acoplados em seus aplicativos. [EventBus](http://greenrobot.org/eventbus/) é uma biblioteca open-source popular que foi criado para resolver esse problema usando o padrão publisher/subscriber.
-
-### IOT SuperApp
-
-
 
 ## Conclusão
 
