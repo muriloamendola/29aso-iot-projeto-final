@@ -27,7 +27,9 @@ public class TemperatureActivity extends AppCompatActivity {
 
         EventBus.getDefault().register(this);
 
-        new WebClient().getTemperatures("1519441200000");
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Timestamp(System.currentTimeMillis()));
+        
+        new WebClient().getTemperatures(timeStamp);
 
         temperatureListFragment = new TemperatureListFragment();
 
