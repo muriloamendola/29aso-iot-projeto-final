@@ -6,6 +6,9 @@ import android.os.Bundle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import br.com.fiap.iot.superapp.R;
 import br.com.fiap.iot.superapp.api.WebClient;
 import br.com.fiap.iot.superapp.event.ListTemperatureEvent;
