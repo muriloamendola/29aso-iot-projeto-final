@@ -165,8 +165,12 @@ O aplicativo foi desenvolvido utilizando os principais frameworks e bibliotecas 
 |------------ ui/
 ```
 
-[Caso de uso - Atualização de alerta de temperatura](./doc/images/screen_temperature.png) 
-[Caso de uso - Lista com as últimas temperaturas](./doc/images/screen_temperature.png)
+* 1 | Caso de uso - Atualização de alerta de temperatura
+![Screen1](./doc/images/screen_temperature.png)
+
+* 2 | Caso de uso - Lista com as últimas temperaturas
+![Screen2](./doc/images/screen_temperature_list.png)
+
 
 ##### Retrofit
 
